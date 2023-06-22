@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:side_menu_app/bottom_menu.dart';
+import 'package:side_menu_app/exception_screen.dart';
 import 'package:side_menu_app/side_menu.dart';
 
 void main() {
@@ -77,13 +81,35 @@ class _DescriptionWidgetState extends State<DescriptionWidget> {
               TextButton(
                 child: const Text('Generate Response'),
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          SideMenu(jsonString: _textEditingController.text),
-                    ),
-                  );
+                  bool isJson = isJsonValid(_textEditingController.text);
+                  if (!isJson) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ExceptionScreen(),
+                      ),
+                    );
+                  } else {
+                    Map<String, dynamic> jsonData =
+                        json.decode(_textEditingController.text);
+                    if (jsonData['menuType'] == "sideMenu") {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              SideMenu(jsonString: _textEditingController.text),
+                        ),
+                      );
+                    } else if (jsonData['menuType'] == "bottomMenu") {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BottomMenu(
+                              jsonString: _textEditingController.text),
+                        ),
+                      );
+                    }
+                  }
                 },
               ),
             ],
@@ -97,5 +123,14 @@ class _DescriptionWidgetState extends State<DescriptionWidget> {
   void dispose() {
     _textEditingController.dispose();
     super.dispose();
+  }
+
+  bool isJsonValid(String jsonString) {
+    try {
+      json.decode(jsonString);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

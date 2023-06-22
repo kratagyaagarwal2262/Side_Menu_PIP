@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:side_menu_app/main.dart';
 import 'package:side_menu_app/model/side_menu_model.dart';
 
+import 'common.dart';
 import 'exception.dart';
 
 class SideMenu extends StatelessWidget {
@@ -20,65 +20,11 @@ class SideMenu extends StatelessWidget {
       SideMenuModel response = SideMenuModel.fromJson(jsonData);
       //  List<dynamic> menuItems = jsonData['menuItems'];
 
-      IconData getIconForName(String iconName) {
-        switch (iconName) {
-          case 'home':
-            {
-              return Icons.home;
-            }
-
-          case 'settings':
-            {
-              return Icons.settings;
-            }
-
-          case 'person':
-            {
-              return Icons.person;
-            }
-
-          default:
-            {
-              return Icons.abc;
-            }
-        }
-      }
-
       return Scaffold(
         appBar: AppBar(
           title: Text(response.menuType!.toUpperCase()),
         ),
-        body: Center(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MyApp(),
-                ),
-              );
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.sp),
-                color: Colors.blue,
-              ),
-              width: 200.sp,
-              height: 50.sp,
-              child: Center(
-                child: Text(
-                  "Click Me to Enter Another \n Json",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+        body: commonButton(context),
         drawer: Drawer(
           child: ListView.builder(
             itemCount: response.menuItems!.length,
@@ -88,10 +34,6 @@ class SideMenu extends StatelessWidget {
                 Color color = Color(
                     int.parse(menuItems.color!.substring(1, 7), radix: 16) +
                         0xFF000000);
-                Color backgroundColor = Color(int.parse(
-                        menuItems.backgroundColor!.substring(1, 7),
-                        radix: 16) +
-                    0xFF000000);
                 return ListTile(
                   title: Text(menuItems.menu!),
                   leading: Icon(getIconForName(menuItems.icon!)),
