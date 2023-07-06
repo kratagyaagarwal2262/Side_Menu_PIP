@@ -5,6 +5,7 @@ import 'package:side_menu_app/components/grid_view.dart';
 import 'package:side_menu_app/components/sc_serch_box.dart';
 import 'package:side_menu_app/provider/sc_provider.dart';
 
+import '../components/task_detail_card.dart';
 import '../main.dart';
 import '../model/dashboard_model.dart';
 
@@ -40,27 +41,54 @@ class DashboardScreen extends StatelessWidget {
                     "SC DashboardScreen",
                   ),
                 ),
-          body: Column(
-            children: [
-              SizedBox(
-                height: 20.sp,
-              ),
-              screens[0].menuType == "gridItems"
-                  ? SizedBox(
-                      height: 180.sp,
-                      child: GridScreen(
-                        gridItems: screens[0].menuItems!,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20.sp,
+                ),
+                screens[0].menuType == "gridItems"
+                    ? SizedBox(
+                        height: 180.sp,
+                        child: GridScreen(
+                          gridItems: screens[0].menuItems!,
+                        ),
+                      )
+                    : invalidGrid(context),
+                SizedBox(
+                  height: 20.sp,
+                ),
+                SizedBox(
+                  height: 100.sp,
+                  child: const SearchLeadBox(),
+                ),
+                SizedBox(
+                  height: 20.sp,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 7.sp),
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        itemCount: screens[2].menuItems!.length,
+                        scrollDirection: Axis.vertical,
+                        physics: const ScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, index) {
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 7.sp),
+                            child: TaskDetailCard(
+                              taskItems: screens[2].menuItems![index],
+                              subText: "Follow Up Call",
+                            ),
+                          );
+                        },
                       ),
-                    )
-                  : invalidGrid(context),
-              SizedBox(
-                height: 20.sp,
-              ),
-              SizedBox(
-                height: 100.sp,
-                child: const SearchLeadBox(),
-              )
-            ],
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

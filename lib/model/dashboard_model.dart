@@ -57,6 +57,12 @@ class MenuItems {
   String? email;
   String? profileImageUrl;
   String? frontIcon;
+  String? orderStatus;
+  String? id;
+  String? city;
+  int? age;
+  int? hoursAgo;
+  String? meetingDate;
 
   MenuItems(
       {this.name,
@@ -64,7 +70,13 @@ class MenuItems {
       this.count,
       this.email,
       this.profileImageUrl,
-      this.frontIcon});
+      this.frontIcon,
+      this.orderStatus,
+      this.id,
+      this.city,
+      this.age,
+      this.hoursAgo,
+      this.meetingDate});
 
   MenuItems.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -73,6 +85,12 @@ class MenuItems {
     email = json['email'];
     profileImageUrl = json['profileImageUrl'];
     frontIcon = json['frontIcon'];
+    orderStatus = json['orderStatus'];
+    id = json['id'];
+    city = json['city'];
+    age = json['age'];
+    hoursAgo = json['hoursAgo'];
+    meetingDate = json['meetingDate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +101,12 @@ class MenuItems {
     data['email'] = email;
     data['profileImageUrl'] = profileImageUrl;
     data['frontIcon'] = frontIcon;
+    data['orderStatus'] = orderStatus;
+    data['id'] = id;
+    data['city'] = city;
+    data['age'] = age;
+    data['hoursAgo'] = hoursAgo;
+    data['meetingDate'] = meetingDate;
     return data;
   }
 }
