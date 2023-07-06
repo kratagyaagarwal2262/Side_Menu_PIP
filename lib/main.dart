@@ -12,8 +12,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Replace this JSON string with your actual JSON data
-
     return ScreenUtilInit(
       designSize: ScreenUtil.defaultSize,
       minTextAdapt: true,

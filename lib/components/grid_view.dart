@@ -19,7 +19,8 @@ class GridScreen extends StatelessWidget {
           crossAxisSpacing: 4,
           crossAxisCount: 2,
           children: gridItems.map((item) {
-            context.read<ScProvider>().changeTotalAmount(item.count!);
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                context.read<ScProvider>().changeTotalAmount(item.count!));
             return SizedBox(
               child: Padding(
                 padding: EdgeInsets.all(6.sp),

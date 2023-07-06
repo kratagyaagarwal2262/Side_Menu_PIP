@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:side_menu_app/components/grid_view.dart';
+import 'package:side_menu_app/components/sc_serch_box.dart';
+import 'package:side_menu_app/provider/sc_provider.dart';
 
 import '../main.dart';
 import '../model/dashboard_model.dart';
@@ -13,38 +16,52 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MyApp(),
-          ),
-        );
-        return false;
-      },
-      child: Scaffold(
-        appBar: screenType == "forceField"
-            ? appBarForSc(context, screens[1].menuItems!)
-            : AppBar(
-                title: const Text(
-                  "SC DashboardScreen",
-                ),
-              ),
-        body: Column(
-          children: [
-            SizedBox(
-              height: 20.sp,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => ScProvider(),
+        ),
+      ],
+      child: WillPopScope(
+        onWillPop: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MyApp(),
             ),
-            screens[0].menuType == "gridItems"
-                ? SizedBox(
-                    height: 180.sp,
-                    child: GridScreen(
-                      gridItems: screens[0].menuItems!,
-                    ),
-                  )
-                : invalidGrid(context),
-          ],
+          );
+          return false;
+        },
+        child: Scaffold(
+          appBar: screenType == "forceField"
+              ? appBarForSc(context, screens[1].menuItems!)
+              : AppBar(
+                  title: const Text(
+                    "SC DashboardScreen",
+                  ),
+                ),
+          body: Column(
+            children: [
+              SizedBox(
+                height: 20.sp,
+              ),
+              screens[0].menuType == "gridItems"
+                  ? SizedBox(
+                      height: 180.sp,
+                      child: GridScreen(
+                        gridItems: screens[0].menuItems!,
+                      ),
+                    )
+                  : invalidGrid(context),
+              SizedBox(
+                height: 20.sp,
+              ),
+              SizedBox(
+                height: 100.sp,
+                child: const SearchLeadBox(),
+              )
+            ],
+          ),
         ),
       ),
     );
