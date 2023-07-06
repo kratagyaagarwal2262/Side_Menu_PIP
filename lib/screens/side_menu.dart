@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:side_menu_app/model/side_menu_model.dart';
 
-import 'common.dart';
-import 'exception.dart';
+import '../common.dart';
+import '../exception.dart';
 
 class SideMenu extends StatelessWidget {
   final String jsonString;

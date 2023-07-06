@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:side_menu_app/exception.dart';
 
-import 'common.dart';
-import 'model/side_menu_model.dart';
+import '../common.dart';
+import '../model/side_menu_model.dart';
 
 class BottomMenu extends StatefulWidget {
   final String jsonString;
